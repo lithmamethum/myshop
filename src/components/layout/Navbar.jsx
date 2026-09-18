@@ -1,0 +1,81 @@
+import { NavLink } from 'react-router-dom'
+import { useCart } from '../../context/CartContext'
+import { useAuth } from '../../context/AuthContext'
+import ThemeToggle from '../common/ThemeToggle'
+
+const navItems = [
+  { to: '/', label: 'Home', end: true },
+  { to: '/products', label: 'Products' },
+]
+
+export default function Navbar() {
+  const { totalItems } = useCart()
+  const { user, logout } = useAuth()
+
+  return (
+    <header className="bg-slate-900 text-white shadow-md sticky top-0 z-50 dark:bg-slate-950">
+      <div className="container mx-auto flex items-center justify-between p-4">
+        {/* Logo */}
+        <NavLink to="/" className="text-xl font-bold flex items-center gap-2">
+          🛒 <span>My Shop</span>
+        </NavLink>
+
+        {/* Nav links */}
+        <nav className="flex items-center gap-6">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors ${
+                  isActive ? 'text-white' : 'text-slate-300 hover:text-white'
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+
+          <ThemeToggle />
+
+          {/* Cart */}
+          <NavLink to="/cart" className="relative" aria-label="Cart">
+            <span className="text-xl">🛍️</span>
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full h-5 min-w-[20px] px-1 flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
+          </NavLink>
+
+          {/* Auth */}
+          {user ? (
+            <div className="flex items-center gap-3 text-sm">
+              <span className="text-slate-300 hidden sm:inline">
+                Hi, {user.name}
+              </span>
+              <button
+                onClick={logout}
+                className="text-slate-300 hover:text-white"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors ${
+                  isActive ? 'text-white' : 'text-slate-300 hover:text-white'
+                }`
+              }
+            >
+              Login
+            </NavLink>
+          )}
+        </nav>
+      </div>
+    </header>
+  )
+}

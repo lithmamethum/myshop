@@ -3,7 +3,7 @@
 > A clean, fully-responsive e-commerce template built with React, Vite, and Tailwind CSS.
 > Perfect for launching your online store fast — with cart, auth, checkout, and dark mode ready to go.
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-000000?style=for-the-badge)](https://your-demo.vercel.app)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-000000?style=for-the-badge)](https://myshop-woad-sigma.vercel.app)
 [![Buy Now](https://img.shields.io/badge/💰_Buy_Now-ff6b6b?style=for-the-badge)](https://gumroad.com/your-link)
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](./LICENSE)
 [![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)](https://react.dev)

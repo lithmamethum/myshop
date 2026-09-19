@@ -111,7 +111,7 @@ export default function Checkout() {
 
         {/* Right: order summary */}
         <aside className="lg:col-span-1">
-          <div className="bg-white rounded-lg border border-slate-100 p-6 sticky top-24 dark:bg-slate-800 dark:border-slate-700">
+          <div className="bg-white rounded-lg border border-slate-100 p-6 lg:sticky lg:top-24 dark:bg-slate-800 dark:border-slate-700">
             <h2 className="font-bold mb-4 dark:text-white">Order Summary</h2>
 
             <ul className="space-y-3 mb-4 max-h-64 overflow-auto">

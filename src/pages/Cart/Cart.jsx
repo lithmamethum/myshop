@@ -42,12 +42,12 @@ export default function Cart() {
           {items.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-lg border border-slate-100 p-4 flex gap-4 dark:bg-slate-800 dark:border-slate-700"
+              className="bg-white rounded-lg border border-slate-100 p-3 sm:p-4 flex gap-3 sm:gap-4 dark:bg-slate-800 dark:border-slate-700"
             >
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-md"
+                className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover rounded-md shrink-0"
               />
 
               <div className="flex-1 flex flex-col">
@@ -72,22 +72,22 @@ export default function Cart() {
                   </button>
                 </div>
 
-                <div className="mt-auto flex items-center justify-between pt-3">
+                <div className="mt-auto flex items-center justify-between gap-2 pt-3">
                   {/* Quantity controls */}
                   <div className="flex items-center border border-slate-200 rounded-md dark:border-slate-600">
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="px-3 py-1 text-slate-600 hover:bg-slate-100 rounded-l-md dark:text-slate-300 dark:hover:bg-slate-700"
+                      className="px-2.5 py-1 sm:px-3 text-slate-600 hover:bg-slate-100 rounded-l-md dark:text-slate-300 dark:hover:bg-slate-700"
                       aria-label="Decrease"
                     >
                       −
                     </button>
-                    <span className="px-3 py-1 text-sm font-medium min-w-[40px] text-center dark:text-white">
+                    <span className="px-2.5 py-1 sm:px-3 text-sm font-medium min-w-[36px] text-center dark:text-white">
                       {item.quantity}
                     </span>
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="px-3 py-1 text-slate-600 hover:bg-slate-100 rounded-r-md dark:text-slate-300 dark:hover:bg-slate-700"
+                      className="px-2.5 py-1 sm:px-3 text-slate-600 hover:bg-slate-100 rounded-r-md dark:text-slate-300 dark:hover:bg-slate-700"
                       aria-label="Increase"
                     >
                       +
@@ -105,7 +105,7 @@ export default function Cart() {
 
         {/* Order summary */}
         <aside className="lg:col-span-1">
-          <div className="bg-white rounded-lg border border-slate-100 p-6 sticky top-24 dark:bg-slate-800 dark:border-slate-700">
+          <div className="bg-white rounded-lg border border-slate-100 p-6 lg:sticky lg:top-24 dark:bg-slate-800 dark:border-slate-700">
             <h2 className="text-lg font-bold mb-4 dark:text-white">Order Summary</h2>
 
             <div className="space-y-2 text-sm mb-4">

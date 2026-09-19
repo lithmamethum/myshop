@@ -15,29 +15,35 @@ export default function Navbar() {
 
   return (
     <header className="bg-slate-900 text-white shadow-md sticky top-0 z-50 dark:bg-slate-950">
-      <div className="container mx-auto flex items-center justify-between p-4">
+      <div className="container mx-auto flex items-center justify-between p-3 sm:p-4 gap-2">
         {/* Logo */}
-        <NavLink to="/" className="text-xl font-bold flex items-center gap-2">
-          <ShoppingCart size={22} />
+        <NavLink
+          to="/"
+          className="text-lg sm:text-xl font-bold flex items-center gap-2 shrink-0"
+        >
+          <ShoppingCart size={20} />
           <span>My Shop</span>
         </NavLink>
 
-        {/* Nav links */}
-        <nav className="flex items-center gap-6">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) =>
-                `text-sm font-medium transition-colors ${
-                  isActive ? 'text-white' : 'text-slate-300 hover:text-white'
-                }`
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+        {/* Right cluster */}
+        <div className="flex items-center gap-3 sm:gap-6">
+          {/* Text links — hidden on very small screens */}
+          <nav className="hidden sm:flex items-center gap-4 md:gap-6">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) =>
+                  `text-sm font-medium transition-colors ${
+                    isActive ? 'text-white' : 'text-slate-300 hover:text-white'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
 
           <ThemeToggle />
 
@@ -57,8 +63,8 @@ export default function Navbar() {
 
           {/* Auth */}
           {user ? (
-            <div className="flex items-center gap-3 text-sm">
-              <span className="text-slate-300 hidden sm:inline">
+            <div className="flex items-center gap-2 sm:gap-3 text-sm">
+              <span className="text-slate-300 hidden md:inline">
                 Hi, {user.name}
               </span>
               <button
@@ -76,13 +82,32 @@ export default function Navbar() {
                   isActive ? 'text-white' : 'text-slate-300 hover:text-white'
                 }`
               }
+              aria-label="Login"
             >
               <LogIn size={16} />
-              Login
+              <span className="hidden sm:inline">Login</span>
             </NavLink>
           )}
-        </nav>
+        </div>
       </div>
+
+      {/* Mobile sub-nav — only on very small screens */}
+      <nav className="sm:hidden border-t border-slate-800 flex items-center justify-center gap-6 py-2">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.end}
+            className={({ isActive }) =>
+              `text-sm font-medium transition-colors ${
+                isActive ? 'text-white' : 'text-slate-400 hover:text-white'
+              }`
+            }
+          >
+            {item.label}
+          </NavLink>
+        ))}
+      </nav>
     </header>
   )
 }

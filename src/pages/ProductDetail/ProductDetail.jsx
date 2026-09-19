@@ -44,7 +44,7 @@ export default function ProductDetail() {
         <ArrowLeft size={16} /> Back
       </button>
 
-      <div className="grid md:grid-cols-2 gap-10">
+      <div className="grid md:grid-cols-2 gap-6 md:gap-10">
         {/* Image */}
         <div className="bg-white rounded-lg overflow-hidden border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
           <div className="aspect-square">
@@ -62,7 +62,7 @@ export default function ProductDetail() {
             {product.category}
           </p>
 
-          <h1 className="text-3xl font-bold text-slate-900 mb-3 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 dark:text-white">
             {product.name}
           </h1>
 
@@ -83,7 +83,7 @@ export default function ProductDetail() {
 
           <p className="text-slate-600 mb-6 dark:text-slate-300">{product.description}</p>
 
-          <div className="text-3xl font-bold text-slate-900 mb-6 dark:text-white">
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 dark:text-white">
             {formatPrice(product.price)}
           </div>
 

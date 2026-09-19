@@ -31,8 +31,8 @@ export default function Home() {
   return (
     <div className="space-y-12">
       {/* Hero */}
-      <section className="bg-gradient-to-r from-slate-900 to-slate-700 text-white rounded-lg p-8 md:p-12 dark:from-slate-950 dark:to-slate-800">
-        <h1 className="text-3xl md:text-5xl font-bold mb-3">
+      <section className="bg-gradient-to-r from-slate-900 to-slate-700 text-white rounded-lg p-6 sm:p-8 md:p-12 dark:from-slate-950 dark:to-slate-800">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3">
           Welcome to My Shop
         </h1>
         <p className="text-slate-300 mb-6 max-w-xl">

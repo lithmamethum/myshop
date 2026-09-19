@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { formatPrice } from '../../utils/formatPrice'
+import { CheckCircle2, Lock } from 'lucide-react'
 
 export default function Checkout() {
   const { items, totalPrice, clearCart } = useCart()
@@ -28,7 +29,11 @@ export default function Checkout() {
   if (placed) {
     return (
       <div className="text-center py-20 max-w-md mx-auto">
-        <div className="text-6xl mb-4">✅</div>
+        <CheckCircle2
+          size={64}
+          className="mx-auto text-green-500 mb-4"
+          strokeWidth={1.5}
+        />
         <h1 className="text-3xl font-bold mb-3 dark:text-white">Order Placed!</h1>
         <p className="text-slate-500 mb-2">
           Thanks for your purchase. A confirmation email is on its way (not
@@ -98,8 +103,8 @@ export default function Checkout() {
               <Input label="Expiry" name="expiry" placeholder="MM/YY" required />
               <Input label="CVC" name="cvc" placeholder="123" required />
             </div>
-            <p className="text-xs text-slate-400 mt-4">
-              🔒 This is a demo. Do not enter real card details.
+            <p className="text-xs text-slate-400 mt-4 flex items-center gap-1.5">
+              <Lock size={12} /> This is a demo. Do not enter real card details.
             </p>
           </section>
         </div>

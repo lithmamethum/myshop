@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { formatPrice } from '../../utils/formatPrice'
+import { X } from 'lucide-react'
 
 export default function Cart() {
   const { items, removeItem, updateQuantity, clearCart, totalPrice } = useCart()
@@ -64,10 +65,10 @@ export default function Cart() {
                   </div>
                   <button
                     onClick={() => removeItem(item.id)}
-                    className="text-slate-400 hover:text-red-500 text-sm"
+                    className="text-slate-400 hover:text-red-500 p-1"
                     aria-label="Remove"
                   >
-                    ✕
+                    <X size={16} />
                   </button>
                 </div>
 

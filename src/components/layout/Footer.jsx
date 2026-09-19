@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ShoppingCart } from 'lucide-react'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
@@ -57,7 +58,9 @@ export default function Footer() {
       {/* Links */}
       <div className="container mx-auto p-6 grid gap-6 md:grid-cols-3">
         <div>
-          <h3 className="text-white font-bold mb-2">🛒 My Shop</h3>
+          <h3 className="text-white font-bold mb-2 flex items-center gap-2">
+            <ShoppingCart size={18} /> My Shop
+          </h3>
           <p className="text-sm text-slate-400">
             Your one-stop shop for everything.
           </p>

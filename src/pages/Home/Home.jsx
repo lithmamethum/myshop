@@ -1,8 +1,26 @@
 import { Link } from 'react-router-dom'
+import {
+  ArrowRight,
+  Laptop,
+  Dumbbell,
+  Home as HomeIcon,
+  Backpack,
+  NotebookPen,
+  Package,
+} from 'lucide-react'
 import products from '../../data/products.json'
 import ProductCard from '../../components/common/ProductCard'
 
 const categories = [...new Set(products.map((p) => p.category))]
+
+// Map category name → Lucide icon component
+const categoryIcons = {
+  Electronics: Laptop,
+  Sports: Dumbbell,
+  Home: HomeIcon,
+  Accessories: Backpack,
+  Stationery: NotebookPen,
+}
 
 export default function Home() {
   const featured = products.slice(0, 4)
@@ -22,9 +40,9 @@ export default function Home() {
         </p>
         <Link
           to="/products"
-          className="inline-block bg-white text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-slate-100 transition-colors"
+          className="inline-flex items-center gap-2 bg-white text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-slate-100 transition-colors"
         >
-          Shop Now →
+          Shop Now <ArrowRight size={18} />
         </Link>
       </section>
 
@@ -34,18 +52,24 @@ export default function Home() {
           Shop by Category
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-          {categories.map((cat) => (
-            <Link
-              key={cat}
-              to="/products"
-              className="bg-white border border-slate-100 rounded-lg p-4 text-center hover:border-slate-300 hover:shadow-sm transition-all dark:bg-slate-800 dark:border-slate-700 dark:hover:border-slate-500"
-            >
-              <span className="text-2xl block mb-2">{categoryEmoji(cat)}</span>
-              <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                {cat}
-              </span>
-            </Link>
-          ))}
+          {categories.map((cat) => {
+            const Icon = categoryIcons[cat] || Package
+            return (
+              <Link
+                key={cat}
+                to="/products"
+                className="bg-white border border-slate-100 rounded-lg p-4 text-center hover:border-slate-300 hover:shadow-sm transition-all dark:bg-slate-800 dark:border-slate-700 dark:hover:border-slate-500 flex flex-col items-center"
+              >
+                <Icon
+                  size={28}
+                  className="text-slate-700 dark:text-slate-200 mb-2"
+                />
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  {cat}
+                </span>
+              </Link>
+            )
+          })}
         </div>
       </section>
 
@@ -57,9 +81,9 @@ export default function Home() {
           </h2>
           <Link
             to="/products"
-            className="text-sm text-blue-600 hover:underline dark:text-blue-400"
+            className="text-sm text-blue-600 hover:underline dark:text-blue-400 inline-flex items-center gap-1"
           >
-            View all →
+            View all <ArrowRight size={14} />
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -77,9 +101,9 @@ export default function Home() {
           </h2>
           <Link
             to="/products"
-            className="text-sm text-blue-600 hover:underline dark:text-blue-400"
+            className="text-sm text-blue-600 hover:underline dark:text-blue-400 inline-flex items-center gap-1"
           >
-            View all →
+            View all <ArrowRight size={14} />
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -90,15 +114,4 @@ export default function Home() {
       </section>
     </div>
   )
-}
-
-function categoryEmoji(cat) {
-  const map = {
-    Electronics: '💻',
-    Sports: '⚽',
-    Home: '🏠',
-    Accessories: '🎒',
-    Stationery: '📓',
-  }
-  return map[cat] || '🛍️'
 }

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Star } from 'lucide-react'
 import { formatPrice } from '../../utils/formatPrice'
 
 export default function ProductCard({ product }) {
@@ -36,7 +37,10 @@ export default function ProductCard({ product }) {
           <span className="font-bold text-slate-900 dark:text-white">
             {formatPrice(product.price)}
           </span>
-          <span className="text-xs text-yellow-500">★ {product.rating}</span>
+          <span className="text-xs text-yellow-500 flex items-center gap-1">
+            <Star size={12} className="fill-yellow-500" />
+            {product.rating}
+          </span>
         </div>
       </div>
     </Link>

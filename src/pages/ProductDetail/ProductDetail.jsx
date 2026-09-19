@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import products from '../../data/products.json'
 import { formatPrice } from '../../utils/formatPrice'
 import { useToast } from '../../context/ToastContext'
+import { ArrowLeft, Star, Truck, RotateCcw, ShieldCheck } from 'lucide-react'
 
 
 export default function ProductDetail() {
@@ -17,7 +18,9 @@ export default function ProductDetail() {
   if (!product) {
     return (
       <div className="text-center py-20">
-        <h1 className="text-4xl font-bold mb-4">Product not found</h1>
+        <h1 className="text-4xl font-bold mb-4 dark:text-white">
+          Product not found
+        </h1>
         <p className="text-slate-500 mb-6">
           The product you're looking for doesn't exist.
         </p>
@@ -36,9 +39,9 @@ export default function ProductDetail() {
       {/* Back link */}
       <button
         onClick={() => navigate(-1)}
-        className="text-sm text-slate-500 hover:text-slate-800 mb-6"
+        className="text-sm text-slate-500 hover:text-slate-800 mb-6 dark:text-slate-400 dark:hover:text-slate-100 inline-flex items-center gap-1.5"
       >
-        ← Back
+        <ArrowLeft size={16} /> Back
       </button>
 
       <div className="grid md:grid-cols-2 gap-10">
@@ -46,7 +49,7 @@ export default function ProductDetail() {
         <div className="bg-white rounded-lg overflow-hidden border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
           <div className="aspect-square">
             <img
-              src={product.image}
+              src={product.image.replace('w=600', 'w=1200')}
               alt={product.name}
               className="w-full h-full object-cover"
             />
@@ -64,7 +67,10 @@ export default function ProductDetail() {
           </h1>
 
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-yellow-500">★ {product.rating}</span>
+            <span className="text-yellow-500 flex items-center gap-1">
+              <Star size={14} className="fill-yellow-500" />
+              {product.rating}
+            </span>
             <span className="text-sm text-slate-400">|</span>
             <span
               className={`text-sm font-medium ${
@@ -101,10 +107,16 @@ export default function ProductDetail() {
           </div>
 
           {/* Extra info */}
-          <div className="mt-8 pt-6 border-t border-slate-200 text-sm text-slate-500 space-y-2 dark:border-slate-700 dark:text-slate-400">
-            <p>✓ Free shipping on orders over $50</p>
-            <p>✓ 30-day return policy</p>
-            <p>✓ Secure checkout</p>
+          <div className="mt-8 pt-6 border-t border-slate-200 text-sm text-slate-500 space-y-3 dark:border-slate-700 dark:text-slate-400">
+            <p className="flex items-center gap-2">
+              <Truck size={16} /> Free shipping on orders over $50
+            </p>
+            <p className="flex items-center gap-2">
+              <RotateCcw size={16} /> 30-day return policy
+            </p>
+            <p className="flex items-center gap-2">
+              <ShieldCheck size={16} /> Secure checkout
+            </p>
           </div>
         </div>
       </div>

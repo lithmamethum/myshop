@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { ShoppingCart, ShoppingBag, LogIn } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
 import ThemeToggle from '../common/ThemeToggle'
@@ -17,7 +18,8 @@ export default function Navbar() {
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo */}
         <NavLink to="/" className="text-xl font-bold flex items-center gap-2">
-          🛒 <span>My Shop</span>
+          <ShoppingCart size={22} />
+          <span>My Shop</span>
         </NavLink>
 
         {/* Nav links */}
@@ -40,8 +42,12 @@ export default function Navbar() {
           <ThemeToggle />
 
           {/* Cart */}
-          <NavLink to="/cart" className="relative" aria-label="Cart">
-            <span className="text-xl">🛍️</span>
+          <NavLink
+            to="/cart"
+            className="relative hover:text-white transition-colors"
+            aria-label="Cart"
+          >
+            <ShoppingBag size={20} />
             {totalItems > 0 && (
               <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full h-5 min-w-[20px] px-1 flex items-center justify-center">
                 {totalItems}
@@ -66,11 +72,12 @@ export default function Navbar() {
             <NavLink
               to="/login"
               className={({ isActive }) =>
-                `text-sm font-medium transition-colors ${
+                `text-sm font-medium transition-colors flex items-center gap-1.5 ${
                   isActive ? 'text-white' : 'text-slate-300 hover:text-white'
                 }`
               }
             >
+              <LogIn size={16} />
               Login
             </NavLink>
           )}

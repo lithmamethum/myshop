@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import products from '../../data/products.json'
 import ProductCard from '../../components/common/ProductCard'
+import { Search, X } from 'lucide-react'
 
 const categories = ['All', ...new Set(products.map((p) => p.category))]
 
@@ -49,9 +50,10 @@ export default function Products() {
       <div className="bg-white rounded-lg border border-slate-100 p-4 mb-6 space-y-4 dark:bg-slate-800 dark:border-slate-700">
         <div className="flex flex-col md:flex-row gap-3">
           <div className="flex-1 relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-              🔍
-            </span>
+            <Search
+              size={16}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            />
             <input
               type="text"
               placeholder="Search products..."
@@ -99,7 +101,10 @@ export default function Products() {
         </div>
       ) : (
         <div className="text-center py-20 bg-white rounded-lg border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
-          <div className="text-5xl mb-4">🔍</div>
+          <Search
+            size={48}
+            className="mx-auto text-slate-300 dark:text-slate-600 mb-4"
+          />
           <h2 className="text-xl font-bold mb-2 dark:text-slate-100">
             No products found
           </h2>

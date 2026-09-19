@@ -241,4 +241,4 @@ This template is licensed under a **commercial license**.
 
 If you bought this template — thank you! If you didn't and just found it helpful, consider [buying it](https://gumroad.com/your-link) to support future updates.
 
-**Made with ❤️ by [Your Name](https://yoursite.com)**
+**Made by Lithma Methum**

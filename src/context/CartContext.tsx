@@ -1,11 +1,17 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
+import type { ReactNode } from 'react'
+import type { CartItem, Product } from '../types'
+import { STORAGE_KEYS } from '../utils/constants'
 
-const CartContext = createContext(null)
+// -------- Reducer types --------
 
-const STORAGE_KEY = 'myshop-cart'
+type CartAction =
+  | { type: 'ADD'; product: Product }
+  | { type: 'REMOVE'; id: number }
+  | { type: 'UPDATE_QTY'; id: number; quantity: number }
+  | { type: 'CLEAR' }
 
-// Reducer handles all cart actions in one place
-function cartReducer(state, action) {
+function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
   switch (action.type) {
     case 'ADD': {
       const existing = state.find((item) => item.id === action.product.id)
@@ -37,38 +43,53 @@ function cartReducer(state, action) {
   }
 }
 
-// Load initial cart from localStorage (so it persists on refresh)
-function loadInitialCart() {
+// -------- Context --------
+
+interface CartContextValue {
+  items: CartItem[]
+  addItem: (product: Product) => void
+  removeItem: (id: number) => void
+  updateQuantity: (id: number, quantity: number) => void
+  clearCart: () => void
+  totalItems: number
+  totalPrice: number
+}
+
+const CartContext = createContext<CartContextValue | null>(null)
+
+function loadInitialCart(): CartItem[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : []
+    const raw = localStorage.getItem(STORAGE_KEYS.CART)
+    return raw ? (JSON.parse(raw) as CartItem[]) : []
   } catch {
     return []
   }
 }
 
-export function CartProvider({ children }) {
+interface CartProviderProps {
+  children: ReactNode
+}
+
+export function CartProvider({ children }: CartProviderProps) {
   const [items, dispatch] = useReducer(cartReducer, [], loadInitialCart)
 
-  // Save to localStorage whenever cart changes
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+    localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(items))
   }, [items])
 
-  const addItem = (product) => dispatch({ type: 'ADD', product })
-  const removeItem = (id) => dispatch({ type: 'REMOVE', id })
-  const updateQuantity = (id, quantity) =>
+  const addItem = (product: Product) => dispatch({ type: 'ADD', product })
+  const removeItem = (id: number) => dispatch({ type: 'REMOVE', id })
+  const updateQuantity = (id: number, quantity: number) =>
     dispatch({ type: 'UPDATE_QTY', id, quantity })
   const clearCart = () => dispatch({ type: 'CLEAR' })
 
-  // Derived values
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalPrice = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   )
 
-  const value = {
+  const value: CartContextValue = {
     items,
     addItem,
     removeItem,
@@ -81,8 +102,7 @@ export function CartProvider({ children }) {
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }
 
-// Custom hook for consuming the cart
-export function useCart() {
+export function useCart(): CartContextValue {
   const ctx = useContext(CartContext)
   if (!ctx) throw new Error('useCart must be used inside <CartProvider>')
   return ctx

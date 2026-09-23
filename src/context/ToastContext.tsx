@@ -1,12 +1,22 @@
 import { createContext, useCallback, useContext, useState } from 'react'
+import type { ReactNode } from 'react'
 import { CheckCircle2 } from 'lucide-react'
+import type { Toast } from '../types'
 
-const ToastContext = createContext(null)
+interface ToastContextValue {
+  addToast: (message: string) => void
+}
 
-export function ToastProvider({ children }) {
-  const [toasts, setToasts] = useState([])
+const ToastContext = createContext<ToastContextValue | null>(null)
 
-  const addToast = useCallback((message) => {
+interface ToastProviderProps {
+  children: ReactNode
+}
+
+export function ToastProvider({ children }: ToastProviderProps) {
+  const [toasts, setToasts] = useState<Toast[]>([])
+
+  const addToast = useCallback((message: string) => {
     const id = Date.now() + Math.random()
     setToasts((prev) => [...prev, { id, message }])
     setTimeout(() => {
@@ -18,7 +28,6 @@ export function ToastProvider({ children }) {
     <ToastContext.Provider value={{ addToast }}>
       {children}
 
-      {/* Toast container — fixed bottom-right */}
       <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-sm z-[100] flex flex-col gap-2 pointer-events-none">
         {toasts.map((t) => (
           <div
@@ -34,7 +43,7 @@ export function ToastProvider({ children }) {
   )
 }
 
-export function useToast() {
+export function useToast(): ToastContextValue {
   const ctx = useContext(ToastContext)
   if (!ctx) throw new Error('useToast must be used inside <ToastProvider>')
   return ctx

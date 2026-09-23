@@ -1,14 +1,20 @@
 import { createContext, useContext, useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
+import type { Theme } from '../types'
+import { STORAGE_KEYS } from '../utils/constants'
 
-const ThemeContext = createContext(null)
-const STORAGE_KEY = 'myshop-theme'
+interface ThemeContextValue {
+  theme: Theme
+  toggleTheme: () => void
+}
 
-function getInitialTheme() {
+const ThemeContext = createContext<ThemeContextValue | null>(null)
+
+function getInitialTheme(): Theme {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY)
+    const stored = localStorage.getItem(STORAGE_KEYS.THEME)
     if (stored === 'light' || stored === 'dark') return stored
 
-    // Otherwise fall back to system preference
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark'
     }
@@ -18,23 +24,25 @@ function getInitialTheme() {
   return 'light'
 }
 
-export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(getInitialTheme)
+interface ThemeProviderProps {
+  children: ReactNode
+}
 
-  // Apply class + persist on change
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
+
   useEffect(() => {
     const root = document.documentElement
     if (theme === 'dark') root.classList.add('dark')
     else root.classList.remove('dark')
 
-    localStorage.setItem(STORAGE_KEY, theme)
+    localStorage.setItem(STORAGE_KEYS.THEME, theme)
   }, [theme])
 
-  // Listen to system changes (only when user hasn't picked manually)
   useEffect(() => {
     const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const handler = (e) => {
-      const stored = localStorage.getItem(STORAGE_KEY)
+    const handler = (e: MediaQueryListEvent) => {
+      const stored = localStorage.getItem(STORAGE_KEYS.THEME)
       if (!stored) setTheme(e.matches ? 'dark' : 'light')
     }
     media.addEventListener('change', handler)
@@ -52,7 +60,7 @@ export function ThemeProvider({ children }) {
   )
 }
 
-export function useTheme() {
+export function useTheme(): ThemeContextValue {
   const ctx = useContext(ThemeContext)
   if (!ctx) throw new Error('useTheme must be used inside <ThemeProvider>')
   return ctx

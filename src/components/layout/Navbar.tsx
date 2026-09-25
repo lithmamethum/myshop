@@ -4,7 +4,13 @@ import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
 import ThemeToggle from '../common/ThemeToggle'
 
-const navItems = [
+interface NavItem {
+  to: string
+  label: string
+  end?: boolean
+}
+
+const navItems: NavItem[] = [
   { to: '/', label: 'Home', end: true },
   { to: '/products', label: 'Products' },
 ]
@@ -15,7 +21,7 @@ export default function Navbar() {
 
   return (
     <header className="bg-slate-900 text-white shadow-md sticky top-0 z-50 dark:bg-slate-950">
-      <div className="container mx-auto flex items-center justify-between p-3 sm:p-4 gap-2">
+      <div className="w-full max-w-7xl mx-auto flex items-center justify-between p-3 sm:p-4 gap-2">
         {/* Logo */}
         <NavLink
           to="/"
@@ -91,7 +97,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile sub-nav — only on very small screens */}
+      {/* Mobile sub-nav */}
       <nav className="sm:hidden border-t border-slate-800 flex items-center justify-center gap-6 py-2">
         {navItems.map((item) => (
           <NavLink

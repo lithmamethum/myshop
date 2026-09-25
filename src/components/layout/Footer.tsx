@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import type { FormEvent } from 'react'
 import { ShoppingCart } from 'lucide-react'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
   const [done, setDone] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setDone(true)
     setEmail('')
@@ -17,7 +18,7 @@ export default function Footer() {
     <footer className="bg-slate-800 text-slate-300 mt-auto dark:bg-slate-950 dark:border-t dark:border-slate-800">
       {/* Newsletter */}
       <div className="border-b border-slate-700 dark:border-slate-800">
-        <div className="container mx-auto p-6 md:p-8 flex flex-col md:flex-row items-center gap-4 md:justify-between">
+        <div className="w-full max-w-7xl mx-auto p-6 md:p-8 flex flex-col md:flex-row items-center gap-4 md:justify-between">
           <div>
             <h3 className="text-white font-bold text-lg">
               Get 10% off your first order
@@ -49,14 +50,14 @@ export default function Footer() {
         </div>
 
         {done && (
-          <p className="container mx-auto pb-4 text-green-400 text-sm">
+          <p className="w-full max-w-7xl mx-auto pb-4 text-green-400 text-sm">
             ✓ Thanks! Check your inbox.
           </p>
         )}
       </div>
 
       {/* Links */}
-      <div className="container mx-auto p-6 grid gap-6 md:grid-cols-3">
+      <div className="w-full max-w-7xl mx-auto p-6 grid gap-6 md:grid-cols-3">
         <div>
           <h3 className="text-white font-bold mb-2 flex items-center gap-2">
             <ShoppingCart size={18} /> My Shop

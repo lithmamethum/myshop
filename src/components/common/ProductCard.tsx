@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom'
 import { Star } from 'lucide-react'
 import { formatPrice } from '../../utils/formatPrice'
+import type { Product } from '../../types'
 
-export default function ProductCard({ product }) {
+interface ProductCardProps {
+  product: Product
+}
+
+export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       to={`/products/${product.id}`}
@@ -29,7 +34,7 @@ export default function ProductCard({ product }) {
         <h3 className="font-semibold text-slate-800 mb-1 line-clamp-1 dark:text-slate-100">
           {product.name}
         </h3>
-        <p className="text-sm text-slate-500 line-clamp-2 mb-3 dark:text-slate-400">
+        <p className="text-sm text-slate-500 line-clamp-2 mb-3 break-words dark:text-slate-400">
           {product.description}
         </p>
 

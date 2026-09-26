@@ -8,13 +8,14 @@ import {
   NotebookPen,
   Package,
 } from 'lucide-react'
-import products from '../../data/products.json'
+import type { ComponentType } from 'react'
+import products from '../../data/products'
 import ProductCard from '../../components/common/ProductCard'
 
-const categories = [...new Set(products.map((p) => p.category))]
+const categories: string[] = [...new Set(products.map((p) => p.category))]
 
 // Map category name → Lucide icon component
-const categoryIcons = {
+const categoryIcons: Record<string, ComponentType<{ size?: number; className?: string }>> = {
   Electronics: Laptop,
   Sports: Dumbbell,
   Home: HomeIcon,
@@ -53,7 +54,7 @@ export default function Home() {
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {categories.map((cat) => {
-            const Icon = categoryIcons[cat] || Package
+            const Icon = categoryIcons[cat] ?? Package
             return (
               <Link
                 key={cat}

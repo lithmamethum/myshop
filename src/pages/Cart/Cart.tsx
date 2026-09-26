@@ -1,22 +1,23 @@
 import { Link } from 'react-router-dom'
+import { X } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
 import { formatPrice } from '../../utils/formatPrice'
-import { X } from 'lucide-react'
 
 export default function Cart() {
   const { items, removeItem, updateQuantity, clearCart, totalPrice } = useCart()
 
-  // Empty state
   if (items.length === 0) {
     return (
       <div className="text-center py-20">
-        <h1 className="text-3xl font-bold mb-3 dark:text-white">Your Cart is Empty</h1>
+        <h1 className="text-3xl font-bold mb-3 dark:text-white">
+          Your Cart is Empty
+        </h1>
         <p className="text-slate-500 mb-6 dark:text-slate-400">
           Looks like you haven't added anything yet.
         </p>
         <Link
           to="/products"
-          className="inline-block bg-slate-900 text-white px-6 py-3 rounded-md hover:bg-slate-700"
+          className="inline-block bg-slate-900 text-white px-6 py-3 rounded-md hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
         >
           Browse Products
         </Link>
@@ -27,7 +28,9 @@ export default function Cart() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Your Cart</h1>
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+          Your Cart
+        </h1>
         <button
           onClick={clearCart}
           className="text-sm text-red-500 hover:text-red-700"
@@ -73,7 +76,6 @@ export default function Cart() {
                 </div>
 
                 <div className="mt-auto flex items-center justify-between gap-2 pt-3">
-                  {/* Quantity controls */}
                   <div className="flex items-center border border-slate-200 rounded-md dark:border-slate-600">
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -106,15 +108,23 @@ export default function Cart() {
         {/* Order summary */}
         <aside className="lg:col-span-1">
           <div className="bg-white rounded-lg border border-slate-100 p-6 lg:sticky lg:top-24 dark:bg-slate-800 dark:border-slate-700">
-            <h2 className="text-lg font-bold mb-4 dark:text-white">Order Summary</h2>
+            <h2 className="text-lg font-bold mb-4 dark:text-white">
+              Order Summary
+            </h2>
 
             <div className="space-y-2 text-sm mb-4">
               <div className="flex justify-between">
-                <span className="text-slate-500 dark:text-slate-400">Subtotal</span>
-                <span>{formatPrice(totalPrice)}</span>
+                <span className="text-slate-500 dark:text-slate-400">
+                  Subtotal
+                </span>
+                <span className="dark:text-slate-200">
+                  {formatPrice(totalPrice)}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500 dark:text-slate-400">Shipping</span>
+                <span className="text-slate-500 dark:text-slate-400">
+                  Shipping
+                </span>
                 <span className="text-green-600 font-medium">Free</span>
               </div>
             </div>
@@ -126,14 +136,14 @@ export default function Cart() {
 
             <Link
               to="/checkout"
-              className="block w-full text-center bg-slate-900 text-white font-semibold px-6 py-3 rounded-md hover:bg-slate-700 transition-colors"
+              className="block w-full text-center bg-slate-900 text-white font-semibold px-6 py-3 rounded-md hover:bg-slate-700 transition-colors dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
             >
               Proceed to Checkout
             </Link>
 
             <Link
               to="/products"
-              className="block w-full text-center text-sm text-slate-500 hover:text-slate-800 mt-3"
+              className="block w-full text-center text-sm text-slate-500 hover:text-slate-800 mt-3 dark:text-slate-400 dark:hover:text-slate-200"
             >
               Continue shopping
             </Link>

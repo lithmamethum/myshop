@@ -1,11 +1,16 @@
 import { useMemo, useState } from 'react'
-import products from '../../data/products.json'
+import { Search } from 'lucide-react'
+import products from '../../data/products'
 import ProductCard from '../../components/common/ProductCard'
-import { Search, X } from 'lucide-react'
 
-const categories = ['All', ...new Set(products.map((p) => p.category))]
+const categories: string[] = ['All', ...new Set(products.map((p) => p.category))]
 
-const sortOptions = [
+interface SortOption {
+  value: string
+  label: string
+}
+
+const sortOptions: SortOption[] = [
   { value: 'featured', label: 'Featured' },
   { value: 'price-asc', label: 'Price: Low to High' },
   { value: 'price-desc', label: 'Price: High to Low' },
@@ -19,7 +24,11 @@ export default function Products() {
 
   const visibleProducts = useMemo(() => {
     let result = [...products]
-    if (category !== 'All') result = result.filter((p) => p.category === category)
+
+    if (category !== 'All') {
+      result = result.filter((p) => p.category === category)
+    }
+
     if (search.trim()) {
       const q = search.trim().toLowerCase()
       result = result.filter(
@@ -28,11 +37,19 @@ export default function Products() {
           p.description.toLowerCase().includes(q)
       )
     }
+
     switch (sort) {
-      case 'price-asc': result.sort((a, b) => a.price - b.price); break
-      case 'price-desc': result.sort((a, b) => b.price - a.price); break
-      case 'rating': result.sort((a, b) => b.rating - a.rating); break
+      case 'price-asc':
+        result.sort((a, b) => a.price - b.price)
+        break
+      case 'price-desc':
+        result.sort((a, b) => b.price - a.price)
+        break
+      case 'rating':
+        result.sort((a, b) => b.rating - a.rating)
+        break
     }
+
     return result
   }, [search, category, sort])
 

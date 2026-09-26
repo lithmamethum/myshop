@@ -1,32 +1,30 @@
-import { useCart } from '../../context/CartContext'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import products from '../../data/products.json'
-import { formatPrice } from '../../utils/formatPrice'
-import { useToast } from '../../context/ToastContext'
 import { ArrowLeft, Star, Truck, RotateCcw, ShieldCheck } from 'lucide-react'
-
+import products from '../../data/products'
+import { formatPrice } from '../../utils/formatPrice'
+import { useCart } from '../../context/CartContext'
+import { useToast } from '../../context/ToastContext'
 
 export default function ProductDetail() {
-  const { id } = useParams()
+  const { id } = useParams<{ id: string }>()
   const { addItem } = useCart()
   const { addToast } = useToast()
   const navigate = useNavigate()
 
   const product = products.find((p) => p.id === Number(id))
 
-  // If no product matches the URL id → friendly not-found
   if (!product) {
     return (
       <div className="text-center py-20">
         <h1 className="text-4xl font-bold mb-4 dark:text-white">
           Product not found
         </h1>
-        <p className="text-slate-500 mb-6">
+        <p className="text-slate-500 mb-6 dark:text-slate-400">
           The product you're looking for doesn't exist.
         </p>
         <Link
           to="/products"
-          className="inline-block bg-slate-900 text-white px-6 py-3 rounded-md hover:bg-slate-700"
+          className="inline-block bg-slate-900 text-white px-6 py-3 rounded-md hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
         >
           Back to Products
         </Link>
@@ -36,7 +34,6 @@ export default function ProductDetail() {
 
   return (
     <div>
-      {/* Back link */}
       <button
         onClick={() => navigate(-1)}
         className="text-sm text-slate-500 hover:text-slate-800 mb-6 dark:text-slate-400 dark:hover:text-slate-100 inline-flex items-center gap-1.5"
@@ -81,7 +78,9 @@ export default function ProductDetail() {
             </span>
           </div>
 
-          <p className="text-slate-600 mb-6 dark:text-slate-300">{product.description}</p>
+          <p className="text-slate-600 mb-6 dark:text-slate-300">
+            {product.description}
+          </p>
 
           <div className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 dark:text-white">
             {formatPrice(product.price)}
@@ -94,7 +93,7 @@ export default function ProductDetail() {
                 addItem(product)
                 addToast(`Added "${product.name}" to cart`)
               }}
-              className="flex-1 bg-slate-900 text-white font-semibold px-6 py-3 rounded-md hover:bg-slate-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed"
+              className="flex-1 bg-slate-900 text-white font-semibold px-6 py-3 rounded-md hover:bg-slate-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 dark:disabled:bg-slate-700 dark:disabled:text-slate-400"
             >
               Add to Cart
             </button>
@@ -106,7 +105,6 @@ export default function ProductDetail() {
             </Link>
           </div>
 
-          {/* Extra info */}
           <div className="mt-8 pt-6 border-t border-slate-200 text-sm text-slate-500 space-y-3 dark:border-slate-700 dark:text-slate-400">
             <p className="flex items-center gap-2">
               <Truck size={16} /> Free shipping on orders over $50
